@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>勇者採用試験 受験者登録</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+<style>
+:root{--wood1:#4a2e1b;--wood2:#3b2415;--p1:#ecd9ab;--p2:#d8bd84;--ink:#3a2410;--sub:#6b4a28;--edge:#5a3a1e;--brass:#c9a45a;--gold:#f2c14e;--err:#a3200f;--field:#fbf2d9;--leather:#7b4a22;--leather2:#5a3516;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--wood1:#32200f;--wood2:#26170b;--p1:#d9c595;--p2:#c1a66f;--field:#ecdcb4}}
+:root[data-theme="dark"]{--wood1:#32200f;--wood2:#26170b;--p1:#d9c595;--p2:#c1a66f;--field:#ecdcb4}
+*,*::before,*::after{box-sizing:border-box}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;color:var(--ink);font-family:"DotGothic16","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;line-height:1.7;background:repeating-linear-gradient(0deg,var(--wood1) 0 58px,var(--wood2) 58px 62px) fixed}
+main{max-width:30rem;margin:0 auto;padding:1.5rem 1rem 3rem}
+h1{margin:.4rem 0 .1rem;text-align:center;font-weight:400;font-size:2rem;letter-spacing:.12em;color:var(--gold);text-shadow:3px 3px 0 #1c0f05}
+.sub{margin:0 0 1rem;text-align:center;color:#e5cfa0;letter-spacing:.3em}
+.circle{display:block;width:8.5rem;height:8.5rem;margin:0 auto 1rem;color:var(--gold);filter:drop-shadow(0 0 5px rgba(242,193,78,.7))}
+.circle.on{animation:spin 5s ease-in-out 1}
+@keyframes spin{to{transform:rotate(360deg)}}
+.win{background:linear-gradient(var(--p1),var(--p2));border:4px solid var(--edge);border-radius:6px;box-shadow:inset 0 0 0 2px var(--brass),0 5px 0 rgba(0,0,0,.5);padding:1.1rem 1.1rem;margin-bottom:1rem}
+label{display:block;margin-bottom:.25rem;color:var(--ink)}
+label::before{content:"▶ ";color:var(--leather)}
+.hint{display:block;font-size:.8rem;color:var(--sub)}
+input{width:100%;font:inherit;font-size:1.15rem;padding:.6rem .7rem;margin-bottom:1rem;color:var(--ink);background:var(--field);border:3px solid var(--edge);border-radius:4px}
+input:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.cmd{width:100%;font:inherit;font-size:1.2rem;letter-spacing:.2em;padding:.7rem;color:#f7e6b8;background:linear-gradient(var(--leather),var(--leather2));border:3px solid var(--brass);border-radius:6px;box-shadow:0 4px 0 #2b1707;text-shadow:1px 1px 0 #2b1707;cursor:pointer}
+.cmd:active{transform:translateY(3px);box-shadow:0 1px 0 #2b1707}
+.err{margin:-.4rem 0 .6rem;min-height:1.7em;color:var(--err)}
+.ttl{margin:-.2rem 0 .7rem;padding-bottom:.4rem;border-bottom:2px dotted var(--edge);font-size:1.3rem;letter-spacing:.3em;text-align:center}
+dl{margin:0}
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:.35rem 0;border-bottom:1px dotted rgba(90,58,30,.5)}
+dt{color:var(--sub);flex:none}
+dd{margin:0;text-align:right;font-size:1.25rem;font-weight:400;overflow-wrap:anywhere}
+.big{font-size:2.4rem;color:var(--leather);line-height:1.2}
+.redo{display:block;width:100%;margin-top:.4rem;padding:.6rem;font:inherit;font-size:1rem;color:#e5cfa0;background:transparent;border:2px dashed #b8996a;border-radius:6px;cursor:pointer}
+.redo small{display:block;font-size:.72rem;line-height:1.4}
+@media (prefers-reduced-motion:reduce){.circle.on{animation:none}}
+[hidden]{display:none}
+</style>
+</head>
+<body>
+<main>
+<svg class="circle" id="circle" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+<circle cx="50" cy="50" r="46"/><circle cx="50" cy="50" r="40" stroke-dasharray="2 3"/>
+<polygon points="50,12 83,69 17,69"/><polygon points="50,88 17,31 83,31"/><circle cx="50" cy="50" r="8"/>
+</svg>
+<h1>勇者採用試験</h1>
+<p class="sub">受験者登録</p>
+
+<section class="win" id="formPanel">
+<form id="form" novalidate>
+<label for="team">チーム番号</label>
+<input id="team" inputmode="numeric" pattern="[0-9]*" autocomplete="off" maxlength="3">
+<label for="name">受験者名<span class="hint">ニックネームでもかまいません</span></label>
+<input id="name" autocomplete="off" maxlength="20">
+<p class="err" id="err" role="alert"></p>
+<button class="cmd" type="submit">登録する</button>
+</form>
+</section>
+
+<section id="done" hidden>
+<div class="win">
+<div class="ttl">登録完了</div>
+<dl>
+<div class="row"><dt>チーム番号</dt><dd class="big" id="tTeam"></dd></div>
+<div class="row"><dt>受験者名</dt><dd id="tName"></dd></div>
+</dl>
+</div>
+<button type="button" id="redo" class="redo"><span class="m">登録をやり直す</span><small>(謎には関係ありません)</small></button>
+<button type="button" id="back" class="redo" hidden>戻る</button>
+</section>
+</main>
+<script>
+(function(){
+var KEY="yuusha-ticket";
+var form=document.getElementById("form"),err=document.getElementById("err");
+function show(d){
+document.getElementById("tTeam").textContent=d.team;
+document.getElementById("tName").textContent=d.name;
+document.getElementById("formPanel").hidden=true;
+document.getElementById("done").hidden=false;
+}
+form.addEventListener("submit",function(ev){
+ev.preventDefault();
+var team=document.getElementById("team").value.trim(),name=document.getElementById("name").value.trim();
+if(!/^[0-9]{1,3}$/.test(team)||!name){err.textContent="チーム番号（数字）と受験者名を入力してください。";return;}
+var d={team:team,name:name};
+try{localStorage.setItem(KEY,JSON.stringify(d));}catch(e){}
+document.getElementById("circle").classList.add("on");
+show(d);
+});
+document.getElementById("redo").addEventListener("click",function(){
+var m=this.querySelector(".m");
+var back=document.getElementById("back");
+if(!this.dataset.ask){this.dataset.ask="1";m.textContent="本当にやり直す（もう一度タップ）";back.hidden=false;return;}
+delete this.dataset.ask;m.textContent="登録をやり直す";back.hidden=true;
+try{localStorage.removeItem(KEY);}catch(e){}
+document.getElementById("team").value="";document.getElementById("name").value="";err.textContent="";
+document.getElementById("circle").classList.remove("on");
+document.getElementById("done").hidden=true;document.getElementById("formPanel").hidden=false;
+});
+document.getElementById("back").addEventListener("click",function(){var r=document.getElementById("redo");delete r.dataset.ask;r.querySelector(".m").textContent="登録をやり直す";this.hidden=true;});
+try{var s=localStorage.getItem(KEY);if(s){var d=JSON.parse(s);if(d&&d.team&&d.name)show(d);}}catch(e){}
+})();
+</script>
+</body>
+</html>
